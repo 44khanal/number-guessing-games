@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        input {
+            margin: 10px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Guess the Number</h1>
+    <p>I've picked a number between 1 and 100. Can you guess it?</p>
+    
+    <input type="number" id="guessInput" placeholder="Enter your guess" />
+    <button onclick="guessNumber()">Guess</button>
+
+    <div id="message"></div>
+
+    <script>
+        const numberToGuess = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        function guessNumber() {
+            const guessInput = document.getElementById('guessInput');
+            const guess = Number(guessInput.value);
+            attempts++;
+
+            if (attempts <= maxAttempts) {
+                if (guess < numberToGuess) {
+                    setMessage(`Too low! You have ${maxAttempts - attempts} attempts left.`);
+                } else if (guess > numberToGuess) {
+                    setMessage(`Too high! You have ${maxAttempts - attempts} attempts left.`);
+                } else {
+                    setMessage(`Congratulations! You guessed the number ${numberToGuess} in ${attempts} attempts.`);
+                    disableInput();
+                }
+            } else {
+                setMessage(`Sorry! You've used all ${maxAttempts} attempts. The number was ${numberToGuess}.`);
+                disableInput();
+            }
+        }
+
+        function setMessage(msg) {
+            document.getElementById('message').innerText = msg;
+        }
+
+        function disableInput() {
+            document.getElementById('guessInput').disabled = true;
+        }
+    </script>
+
+</body>
+</html>
